@@ -11,8 +11,7 @@
 <p align="center">
   <b>Enterprise Resource Planning (ERP) &amp; Supply Chain Management (SCM)</b> internal untuk Purnama
   Textile — dirancang berjalan <b>on-premise</b> di jaringan intranet pabrik.
-  <br/>
-  <a href="./PRD_ERP_Purnama_Textile.md">📄 Lihat Product Requirements (PRD)</a>
+  
 </p>
 
 ---
@@ -21,37 +20,37 @@
 
 Sistem mencakup **6 modul inti** yang tersusun sekuensial mengikuti alur operasional pabrik (dari perencanaan hingga pelaporan keuangan):
 
-| # | Modul | Cakupan Utama |
-|---|-------|---------------|
-| 1 | **PPIC** | MPS (Master Production Schedule), BOM, MRP |
-| 2 | **Purchasing** | Vendor/Supplier, Purchase Request (PR), Purchase Order (PO), Monitoring & Retur |
-| 3 | **Warehouse** | Goods Receipt, Inventory Tracking, Stock Opname, Material Issue |
-| 4 | **Produksi** | Surat Perintah Kerja (SPK), Workcenter Routing, QC & Waste |
-| 5 | **Distribusi & Logistik** | Delivery Order (DO), Packing List, Fleet/Ekspedisi |
-| 6 | **Finance & Accounting** | General Ledger, AP/AR, Payroll, Laporan Keuangan |
+| #   | Modul                     | Cakupan Utama                                                                   |
+| --- | ------------------------- | ------------------------------------------------------------------------------- |
+| 1   | **PPIC**                  | MPS (Master Production Schedule), BOM, MRP                                      |
+| 2   | **Purchasing**            | Vendor/Supplier, Purchase Request (PR), Purchase Order (PO), Monitoring & Retur |
+| 3   | **Warehouse**             | Goods Receipt, Inventory Tracking, Stock Opname, Material Issue                 |
+| 4   | **Produksi**              | Surat Perintah Kerja (SPK), Workcenter Routing, QC & Waste                      |
+| 5   | **Distribusi & Logistik** | Delivery Order (DO), Packing List, Fleet/Ekspedisi                              |
+| 6   | **Finance & Accounting**  | General Ledger, AP/AR, Payroll, Laporan Keuangan                                |
 
 ---
 
 ## 🧾 Aturan Bisnis & Integritas Data
 
-> **🛡️ Stok anti-negatif** — Transaksi keluar (Material Issue, Delivery Order, dan selisih Opname yang mengurangi stok) **ditolak** bila melebihi saldo *on-hand* yang tersedia → HTTP `400 Bad Request`.
+> **🛡️ Stok anti-negatif** — Transaksi keluar (Material Issue, Delivery Order, dan selisih Opname yang mengurangi stok) **ditolak** bila melebihi saldo _on-hand_ yang tersedia → HTTP `400 Bad Request`.
 
 > **✅ Barang jadi dari QC** — Hasil inspeksi yang **lolos (passed)** otomatis tercatat ke gudang barang jadi (`finished_goods_in`), sehingga stok siap jual terekam sebelum pengiriman (DO).
 
-> **🧮 Akuntansi otomatis** — Penerimaan barang menjurnal (Debet Persediaan / Kredit Hutang), pengeluaran material menjurnal WIP, dan pengiriman menjurnal HPP & Pendapatan. Laporan **Laba/Rugi** memisahkan HPP dari beban operasional, dan **Neraca** memasukkan laba ditahan periode berjalan sehingga selalu *balance*.
+> **🧮 Akuntansi otomatis** — Penerimaan barang menjurnal (Debet Persediaan / Kredit Hutang), pengeluaran material menjurnal WIP, dan pengiriman menjurnal HPP & Pendapatan. Laporan **Laba/Rugi** memisahkan HPP dari beban operasional, dan **Neraca** memasukkan laba ditahan periode berjalan sehingga selalu _balance_.
 
 ---
 
 ## 🛠️ Stack Teknologi
 
-| Layer | Teknologi |
-|-------|-----------|
-| **Backend** | Python · FastAPI · SQLAlchemy |
-| **Database** | PostgreSQL |
-| **Caching** | Redis |
-| **Autentikasi** | JWT |
-| **Frontend** | React + Vite (dashboard web) |
-| **Deployment** | Docker & Docker Compose (on-premise) |
+| Layer           | Teknologi                            |
+| --------------- | ------------------------------------ |
+| **Backend**     | Python · FastAPI · SQLAlchemy        |
+| **Database**    | PostgreSQL                           |
+| **Caching**     | Redis                                |
+| **Autentikasi** | JWT                                  |
+| **Frontend**    | React + Vite (dashboard web)         |
+| **Deployment**  | Docker & Docker Compose (on-premise) |
 
 ---
 
@@ -65,10 +64,10 @@ cp backend/.env.example backend/.env
 docker compose up -d --build
 ```
 
-| Layanan | Alamat |
-|---------|--------|
-| Frontend | http://localhost |
-| Backend API | http://localhost:8000 |
+| Layanan            | Alamat                     |
+| ------------------ | -------------------------- |
+| Frontend           | http://localhost           |
+| Backend API        | http://localhost:8000      |
 | API Docs (Swagger) | http://localhost:8000/docs |
 
 ---
@@ -120,11 +119,11 @@ python -m tests.smoke_test    # diharapkan: 28 lolos, 0 gagal
 
 ## 👤 Akun Default
 
-Dibuat otomatis saat proses *seed*:
+Dibuat otomatis saat proses _seed_:
 
-| Username | Password | Role |
-|:--------:|:--------:|:----:|
-| `admin` | `admin123` | admin |
+| Username |  Password  | Role  |
+| :------: | :--------: | :---: |
+| `admin`  | `admin123` | admin |
 
 > ⚠️ **Penting:** Segera ganti kata sandi default ini setelah instalasi pertama.
 
@@ -132,7 +131,7 @@ Dibuat otomatis saat proses *seed*:
 
 ## 💾 Backup Database (NAS)
 
-Jalankan script di folder `scripts/` melalui *cron job*; hasil *dump* disimpan ke perangkat **NAS** terpisah sebagai lapisan perlindungan data. Lihat panduan lengkap di `scripts/backup.md`.
+Jalankan script di folder `scripts/` melalui _cron job_; hasil _dump_ disimpan ke perangkat **NAS** terpisah sebagai lapisan perlindungan data. Lihat panduan lengkap di `scripts/backup.md`.
 
 ---
 
