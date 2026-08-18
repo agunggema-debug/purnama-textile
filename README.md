@@ -149,6 +149,24 @@ purnama-textile/
 
 ---
 
+<img width="1907" height="908" alt="image" src="https://github.com/user-attachments/assets/8d905bfd-03d2-4585-9343-73642b8fbe34" />
+
+
 <p align="center">
   <sub>© Purnama Textile — Sistem ERP &amp; SCM On-Premise</sub>
 </p>
+```
+
+---
+
+<img width="1919" height="904" alt="image" src="https://github.com/user-attachments/assets/afbac0c5-d326-4000-a340-f76a80a95562" />
+
+
+
+---
+<img width="1882" height="899" alt="image" src="https://github.com/user-attachments/assets/81e2eff5-5960-4a11-93a6-db9c5f634927" />
+
+
+```
+
+
