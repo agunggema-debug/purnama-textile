@@ -1,0 +1,110 @@
+# ============================================================
+#  Purnama Textile ERP — .gitignore
+#  File sensitif (kredensial, secret, DB lokal, backup) tidak
+#  boleh ikut ter-commit / terpush ke GitHub.
+# ============================================================
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.coverage
+.tox/
+.nox/
+
+# ---------- Node / Frontend ----------
+node_modules/
+dist/
+dist-ssr/
+.build/
+.nuxt/
+.next/
+out/
+*.tsbuildinfo
+*.local
+.vite/
+
+# ---------- Environment & rahasia (WAJIB diabaikan) ----------
+# Abaikan SEMUA file lingkungan di level manapun (cakup backend/.env, dll.)
+.env
+.env.*
+# Tapi PERTOPIKAN template placeholder agar tetap terdorong
+!.env.example
+!.env*.example
+
+# Berkas berisi kredensial / secret eksplisit
+secrets/
+credentials.json
+client_secret*.json
+service_account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.p8
+*.ppk
+*.jks
+.keystore
+*.token
+*.credential
+*.secret
+.private*
+
+# ---------- Backups / Data dumps / Database ----------
+backups/
+*.sql
+*.sql.gz
+*.dump
+*.bak
+*.orig
+*.old
+*.tmp
+*.temp
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Database dev lokal (sensitif berisi data produksi)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+healthchecks/
+pgdata/
+
+# ---------- Logs ----------
+*.log
+logs/
+*.npm-debug.log*
+
+# ---------- IDE / OS ----------
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# ---------- Dokumentasi Markdown ----------
+# File .md (PRD, README, panduan) HARUS ikut ter-commit.
+# Baris berikut memastikan dokumen markdown tidak terabaikan.
+!*.md
+PRD_ERP_Purnama_Textile.md
+# ---------- Referensi (opsional—gunakan per variabel) ----------
+# .env.example berisi placeholder; isi nilai asli hanya di .env lokal

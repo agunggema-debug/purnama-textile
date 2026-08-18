@@ -1,0 +1,86 @@
+# ============================================================================
+# Sistem ERP & SCM Internal Purnama Textile (On-Premise)
+# Deployment lokal melalui Docker Compose dalam jaringan intranet pabrik.
+# ============================================================================
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: pt_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-purnama}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-purnama_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-purnama_erp}
+      TZ: Asia/Jakarta
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/backup:/backup
+    ports:
+      - "5432:5432"
+    networks:
+      - pt_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-purnama} -d ${POSTGRES_DB:-purnama_erp}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: pt_redis
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+    networks:
+      - pt_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: pt_backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-purnama}:${POSTGRES_PASSWORD:-purnama_secret}@db:5432/${POSTGRES_DB:-purnama_erp}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - pt_net
+    command: >
+      sh -c "python -m app.db.init_db &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: pt_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - pt_net
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  pt_net:
+    driver: bridge
